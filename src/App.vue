@@ -1,11 +1,9 @@
 <template>
   <q-layout view="hHh lpR fff">
-    <q-header reveal bordered class="bg-primary text-white">
+    <q-header reveal bordered class="bg-white text-black">
       <q-toolbar>
         <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg" />
-          </q-avatar>
+          <q-icon name="fa fa-flask" />
           Experimentation Platform
         </q-toolbar-title>
       </q-toolbar>

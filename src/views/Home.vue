@@ -1,18 +1,22 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+  <div
+    class="audience-builder query-builder-container"
+    style="width: 900px; margin: 0 auto;padding: 30px"
+  >
+    <div class="query-builder qb-lite">
+      <GroupContainer />
+    </div>
   </div>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from "@/components/HelloWorld.vue";
+
+import GroupContainer from "@/views/GroupContainer";
 
 export default {
   name: "Home",
-  components: {
-    HelloWorld,
-  },
+  components: { GroupContainer },
+  methods: {},
 };
 </script>
