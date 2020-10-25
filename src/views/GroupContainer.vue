@@ -5,16 +5,26 @@
         <div class="group--conjunctions block flex-1" style="flex: 1">
           <div class="">
             <q-btn-toggle
-              v-model="model"
+              v-if="editMode"
+              v-model="value.concat"
               toggle-color="primary"
               :options="[
                 { label: 'AND', value: 'AND' },
                 { label: 'OR', value: 'OR' },
               ]"
             />
+            <q-btn
+              class="bg-primary text-white"
+              v-else
+              disable
+              v-model="value.concat"
+              toggle-color="primary"
+              :label="value.concat"
+            />
           </div>
         </div>
         <div
+          v-if="editMode"
           class="group--actions group--actions--tr flex justify-end content-end"
         >
           <div class="">
@@ -27,13 +37,21 @@
           </div>
         </div>
       </div>
-      <div class="group--children hide--line one--child" ref="container"></div>
+      <div class="group--children hide--line one--child" ref="container">
+        <template v-for="(item, idx) in value.children">
+          <component
+            :edit-mode="editMode"
+            :is="item.type"
+            :key="idx"
+            v-model="value.children[idx]"
+          ></component>
+        </template>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import Vue from "vue";
 import RuleContainer from "@/views/RuleContainer";
 import GroupContainer from "@/views/GroupContainer";
 
@@ -41,21 +59,43 @@ export default {
   name: "GroupContainer",
   data() {
     return {
-      model: "AND",
+      defaultConcat: "AND",
+      children: [],
     };
+  },
+  components: {
+    RuleContainer: RuleContainer,
+    GroupContainer: GroupContainer,
+  },
+  props: {
+    value: {
+      type: Object,
+      default: () => ({ concat: "AND", children: [] }),
+    },
+    editMode: {
+      type: Boolean,
+      default: () => true,
+    },
+  },
+  mounted() {
+    console.log(this.editMode);
+    console.log(this.value);
   },
   methods: {
     onClick() {
-      const ComponentClass = Vue.extend(RuleContainer);
-      const instance = new ComponentClass();
-      instance.$mount();
-      this.$refs.container.appendChild(instance.$el);
+      this.value.children.push({
+        type: "RuleContainer",
+        field: "",
+        operator: "",
+        value: "",
+      });
     },
     onGroupClick() {
-      const ComponentClass = Vue.extend(GroupContainer);
-      const instance = new ComponentClass();
-      instance.$mount();
-      this.$refs.container.appendChild(instance.$el);
+      this.value.children.push({
+        type: "GroupContainer",
+        concat: "AND",
+        children: [],
+      });
     },
   },
 };
@@ -87,16 +127,20 @@ export default {
   top: -4px;
   border-width: 0 0 2px 2px;
 }
+
 .group--children > .group-or-rule-container > .group-or-rule::after {
   top: 50%;
   border-width: 0 0 0 2px;
 }
+
 .group-or-rule-container:last-child {
   margin-bottom: 0px !important;
 }
+
 .group-or-rule-container:first-child {
   margin-top: 0px !important;
 }
+
 .group-or-rule-container {
   margin-top: 10px;
   margin-bottom: 10px;
@@ -112,10 +156,12 @@ export default {
 div {
   display: block;
 }
+
 .group-or-rule {
   border-radius: 5px;
   position: relative;
 }
+
 .group--header,
 .group--footer {
   padding-left: 10px;
@@ -123,22 +169,27 @@ div {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
 .group--children {
   margin-top: 10px;
   margin-bottom: 10px;
 }
+
 .group--children {
   padding-left: 24px;
 }
+
 .group {
   background: white;
   border: 1px solid #cdcdcd;
 }
+
 .query-builder *,
 .query-builder *::before,
 .query-builder *::after {
   box-sizing: border-box;
 }
+
 .group-or-rule-container:last-child {
   margin-bottom: 0px !important;
 }
@@ -146,29 +197,35 @@ div {
 .group-or-rule-container:first-child {
   margin-top: 0px !important;
 }
+
 .group-or-rule-container {
   margin-top: 10px;
   margin-bottom: 10px;
   padding-right: 10px;
 }
+
 .rule {
   flex: 1;
   display: flex;
 }
+
 .group-or-rule {
   border-radius: 5px;
   position: relative;
 }
+
 .rule {
   background-color: #e8f0fe;
   border: 1px solid transparent;
   padding: 10px;
 }
+
 .rule--body--wrapper {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
+
 .rule--field,
 .group--field,
 .rule--operator,
