@@ -28,12 +28,18 @@
           class="group--actions group--actions--tr flex justify-end content-end"
         >
           <div class="">
-            <button @click="onClick" type="button">
+            <q-btn
+              size=""
+              class="q-mr-sm"
+              @click="onClick"
+              color="primary"
+              type="button"
+            >
               Add rule
-            </button>
-            <button @click="onGroupClick" type="button">
+            </q-btn>
+            <q-btn @click="onGroupClick" color="primary" type="button">
               Add group
-            </button>
+            </q-btn>
           </div>
         </div>
       </div>

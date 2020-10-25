@@ -4,7 +4,7 @@
       <q-toolbar>
         <q-toolbar-title>
           <q-icon name="fa fa-flask" />
-          Experimentation Platform
+          Query selector
         </q-toolbar-title>
       </q-toolbar>
     </q-header>
