@@ -11,7 +11,7 @@
       <GroupContainer :edit-mode="false" v-model="initialQuery" />
     </div>
     <div class="text-h5 q-mt-md">JSON</div>
-    <pre>{{ JSON.stringify(initialQuery, null, 4) }}</pre>
+    <pre>{{ JSON.stringify(initialQuery, null, 2) }}</pre>
   </div>
 </template>
 
@@ -31,7 +31,7 @@ export default {
           {
             type: "RuleContainer",
             field: "FIELD_NAME",
-            operator: "==",
+            operator: "=",
             value: "VALUE",
           },
         ],
